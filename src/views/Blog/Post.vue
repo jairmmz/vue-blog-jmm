@@ -71,7 +71,7 @@ import { postsList } from '../../db_fake/posts'
 
 const route = useRoute()
 
-const post: IPost = ref({
+const post = ref<IPost>({
     category: '',
     title: '',
     slug: '',
@@ -83,7 +83,20 @@ const post: IPost = ref({
 
 
 const loadPost = (slug: string | string[]) => {
-    post.value = postsList.find((post) => post.slug === slug)
+    const foundPost = postsList.find((post) => post.slug === slug)
+    if ( foundPost ) {
+        post.value = foundPost
+    } else {
+        post.value = {
+            category: '',
+            title: '',
+            slug: '',
+            description: '',
+            image: '',
+            date: '',
+            time_read: ''
+        }
+    }
 }
 
 onMounted(() => {
